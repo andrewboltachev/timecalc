@@ -4,6 +4,11 @@ import atexit
 import os
 import rlcompleter
 import re
+import argparse
+
+parser = argparse.ArgumentParser(description='Simple time calculator.')
+parser.add_argument('--real', action='store_true')
+real = parser.parse_args()
 
 historyPath = os.path.expanduser("~/.timecalc-history")
 
@@ -16,6 +21,9 @@ if os.path.exists(historyPath):
 
 atexit.register(save_history)
 del os, atexit, readline, rlcompleter, save_history, historyPath
+
+if real:
+    print '"Real calculation" mode: would "shift" negative values and ones more than 24h'
 
 x = ''
 while x not in ['q']:
@@ -36,6 +44,12 @@ while x not in ['q']:
                 h = int(t[0])
                 m = int(t[1])
                 s += neg * (m + h * 60)
+            MINUTES_IN_DAY = 24 * 60
+            if real:
+                while s >= MINUTES_IN_DAY:
+                    s -= MINUTES_IN_DAY
+                while s < 0:
+                    s += MINUTES_IN_DAY
             r = ''
             r += '-' if s < 0 else ''
             s = abs(s)
