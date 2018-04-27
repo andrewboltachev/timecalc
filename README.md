@@ -18,7 +18,7 @@ Usage example (standard mode):
 "Real calculation" mode (useful to calculate timezone shifts):
 `````
 ➜  timecalc git:(master) python timecalc.py --real
-"Real calculation" mode: would "shift" negative values and ones more than 24h
+"Real calculation" mode: would "shift" negative values and ones bigger than 24h
 >>> 15:00+17:00
 8:00
 >>> 00:00-23:00
